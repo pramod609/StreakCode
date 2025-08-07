@@ -10,7 +10,6 @@ const register = async (req,res)=>{
     
     try{
         // validate the data;
-        console.log('Registration attempt with data:', req.body);
         
         validate(req.body); 
         const {firstName, emailId, password}  = req.body;
@@ -42,7 +41,6 @@ const register = async (req,res)=>{
     })
     }
     catch(err){
-        console.log('Registration error:', err.message);
         res.status(400).json({
             message: err.message,
             error: "Registration failed"

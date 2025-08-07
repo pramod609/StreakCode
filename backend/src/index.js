@@ -14,7 +14,11 @@ const cors = require('cors')
 // console.log("Hello")
 
 app.use(cors({
-    origin: true, // Allow all origins temporarily for debugging
+    origin: [
+        'https://streak-code-beta.vercel.app',
+        'http://localhost:5173',
+        'https://localhost:5173'
+    ],
     credentials: true 
 }))
 
