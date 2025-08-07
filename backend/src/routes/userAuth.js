@@ -7,6 +7,7 @@ const adminMiddleware = require('../middleware/adminMiddleware');
 
 // Register
 authRouter.post('/register', register);
+authRouter.post('/signup', register); // Add alias for signup
 authRouter.post('/login', login);
 authRouter.post('/logout', userMiddleware, logout);
 authRouter.post('/admin/register', adminMiddleware ,adminRegister);

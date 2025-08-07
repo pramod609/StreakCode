@@ -5,6 +5,8 @@ const redisClient = require("../config/redis")
 const userMiddleware = async (req,res,next)=>{
 
     try{
+        console.log('Cookies received:', req.cookies);
+        console.log('Headers:', req.headers);
         
         const {token} = req.cookies;
         if(!token)
