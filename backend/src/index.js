@@ -14,7 +14,7 @@ const cors = require('cors')
 // console.log("Hello")
 
 app.use(cors({
-    origin: 'https://streak-code-beta.vercel.app',
+    origin: ['https://streak-code-beta.vercel.app'],
     credentials: true 
 }))
 
