@@ -10,7 +10,6 @@ const register = async (req,res)=>{
     
     try{
         // validate the data;
-        
         validate(req.body); 
         const {firstName, emailId, password}  = req.body;
 
@@ -60,6 +59,9 @@ const login = async (req,res)=>{
             throw new Error("Invalid Credentials");
 
         const user = await User.findOne({emailId});
+        
+        if(!user)
+            throw new Error("Invalid Credentials");
 
         const match = await bcrypt.compare(password,user.password);
 
@@ -86,7 +88,10 @@ const login = async (req,res)=>{
         })
     }
     catch(err){
-        res.status(401).send("Error: "+err);
+        res.status(401).json({
+            message: err.message,
+            error: "Login failed"
+        });
     }
 }
 
