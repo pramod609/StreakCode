@@ -40,14 +40,6 @@ app.use('/submission',submitRouter);
 app.use('/ai',aiRouter);
 app.use("/video",videoRouter);
 
-// Add 404 handler
-app.use('*', (req, res) => {
-    res.status(404).json({ 
-        message: `Route ${req.originalUrl} not found`,
-        availableRoutes: ['/user', '/problem', '/submission', '/ai', '/video']
-    });
-});
-
 // Add error handling middleware
 app.use((err, req, res, next) => {
     console.error('Error:', err);
