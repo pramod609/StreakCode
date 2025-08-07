@@ -10,9 +10,10 @@ const register = async (req,res)=>{
     
     try{
         // validate the data;
-
-      validate(req.body); 
-      const {firstName, emailId, password}  = req.body;
+        console.log('Registration attempt with data:', req.body);
+        
+        validate(req.body); 
+        const {firstName, emailId, password}  = req.body;
 
       req.body.password = await bcrypt.hash(password, 10);
       req.body.role = 'user'
@@ -41,7 +42,11 @@ const register = async (req,res)=>{
     })
     }
     catch(err){
-        res.status(400).send("Error: "+err);
+        console.log('Registration error:', err.message);
+        res.status(400).json({
+            message: err.message,
+            error: "Registration failed"
+        });
     }
 }
 

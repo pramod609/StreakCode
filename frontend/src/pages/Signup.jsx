@@ -9,14 +9,19 @@ import { registerUser } from '../authSlice';
 const signupSchema = z.object({
   firstName: z.string().min(3, "Minimum character should be 3"),
   emailId: z.string().email("Invalid Email"),
-  password: z.string().min(8, "Password is too weak")
+  password: z.string()
+    .min(8, "Password must be at least 8 characters")
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+    .regex(/[0-9]/, "Password must contain at least one number")
+    .regex(/[^A-Za-z0-9]/, "Password must contain at least one special character")
 });
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated, loading } = useSelector((state) => state.auth); // Removed error as it wasn't used
+  const { isAuthenticated, loading, error } = useSelector((state) => state.auth);
 
   const {
     register,
@@ -39,6 +44,14 @@ function Signup() {
       <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
           <h2 className="card-title justify-center text-3xl mb-6">Leetcode</h2> {/* Added mb-6 for spacing */}
+          
+          {/* Display backend error */}
+          {error && (
+            <div className="alert alert-error mb-4">
+              <span>{error.message || error}</span>
+            </div>
+          )}
+          
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* First Name Field */}
             <div className="form-control">
@@ -105,6 +118,11 @@ function Signup() {
               </div>
               {errors.password && (
                 <span className="text-error text-sm mt-1">{errors.password.message}</span>
+              )}
+              {!errors.password && (
+                <span className="text-sm text-gray-500 mt-1">
+                  Password must contain uppercase, lowercase, number and special character
+                </span>
               )}
             </div>
 

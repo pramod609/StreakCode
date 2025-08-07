@@ -9,13 +9,13 @@ const validate = (data)=>{
     const IsAllowed = mandatoryField.every((k)=> Object.keys(data).includes(k));
 
     if(!IsAllowed)
-        throw new Error("Some Field Missing");
+        throw new Error("Required fields missing: firstName, emailId, password");
 
     if(!validator.isEmail(data.emailId))
-        throw new Error("Invalid Email");
+        throw new Error("Invalid email format");
 
     if(!validator.isStrongPassword(data.password))
-        throw new Error("Week Password");
+        throw new Error("Password must contain at least 8 characters including uppercase, lowercase, number and special character");
 }
 
 module.exports = validate;
